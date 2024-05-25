@@ -4,6 +4,17 @@ interface Props {
 }
 
 const { title } = Astro.props
+
+declare global {
+  interface Window {
+    navigation: any;
+  }
+
+  interface Document {
+    startViewTransition: any;
+  }
+}
+
 ---
 
 <!doctype html>
@@ -31,7 +42,7 @@ const { title } = Astro.props
 
 <script>
   if (document.startViewTransition) {
-    window.navigation.addEventListener('navigate', event => {
+    window.navigation.addEventListener('navigate', (event: any) => {
       const toURL = new URL(event.destination.url)
 
       //* Only allow navigation to the same origin
