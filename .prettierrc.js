@@ -8,7 +8,7 @@ export default {
   useTabs: false,
   arrowParens: 'avoid',
   bracketSameLine: true,
-  singleAttributePerLine: true,
+  singleAttributePerLine: false,
   overrides: [
     {
       files: ['*.json', '*.md', '*.toml', '*.yml'],
