@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Title from '../components/Title.astro'
+import { books } from '../data/books'
+import { type BookI } from '../types'
+
+const { book } = Astro.params
+const info: BookI | undefined = books.find(b => b.id === book)
+
+if (!info) {
+  return Astro.redirect('/404')
+}
+---
+
+<Layout title={info?.title || '📕'}>
+  <main class='m-auto max-w-4xl'>
+    <Title classes='scale-75'>
+      <a href='/'>
+        <svg
+          class='rotate-180 w-5 h-5'
+          aria-hidden='true'
+          xmlns='http://www.w3.org/2000/svg'
+          fill='none'
+          viewBox='0 0 14 10'>
+          <path
+            stroke='currentColor'
+            stroke-linecap='round'
+            stroke-linejoin='round'
+            stroke-width='2'
+            d='M1 5h12m0 0L9 1m4 4L9 9'></path>
+        </svg>
+      </a>
+    </Title>
+
+    <div class='grid md:grid-cols-2 md:gap-x-12 py-8 px-4'>
+      <picture class='mb-8 w-full relative'>
+        <img
+          class='aspect[389/500] h-full object-cover w-full max-w-full rounded'
+          src={info?.img}
+          alt={`${info?.title} book cover`}
+          style={`view-transition-name: ${info.id}`}
+        />
+      </picture>
+
+      <aside>
+        <h1 class='text-5xl font-black mb-4'>{info?.title}</h1>
+        <p class='text-lg mb-4'>{info?.description}</p>
+        <p>
+          <strong>Author: </strong>
+          <span class='font-semibold text-gray-800'>{info?.author}</span>
+        </p>
+      </aside>
+    </div>
+  </main>
+</Layout>
